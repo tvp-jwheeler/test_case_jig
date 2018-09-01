@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "assert": "^1.4.1",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
+    "download": "^7.1.0",
+    "express": "^4.16.3",
+    "jsonexport": "^2.3.0",
+    "mongodb": "^2.2.33",
+    "mongoose": "^5.2.10",
+    "mysql": "^2.16.0"
+  }
+}
