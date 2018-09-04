@@ -3,6 +3,7 @@
     "assert": "^1.4.1",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
     "download": "^7.1.0",
     "express": "^4.16.3",
     "jsonexport": "^2.3.0",

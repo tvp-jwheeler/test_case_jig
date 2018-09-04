@@ -2,6 +2,7 @@ const assert = require('assert');
 const mysql = require('mysql');
 const Q = require("q");
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const jsonexport = require('jsonexport');
@@ -9,6 +10,8 @@ const fs = require('fs');
 const download = require('download');
 var os = require("os");
 const app = express();
+app.use(cors());
+
 //----- Express Configuration
 const app_port = 3000;
 //----- MongoDB Connection
@@ -306,6 +309,9 @@ app.get("/getPagesForModule/:module_name", function(req,res) {
 		res.send(page_objects);
 	});
 });
+//TODO: Create a getAllPages Endpoint
+
+
 app.get("/getComponentsForPage/:page_name", function(req,res) {
 	getComponentsForPage(req.params.page_name).then(function(componentNames){
 		res.send(componentNames);
@@ -358,11 +364,10 @@ app.post("/generateCSVForModule", jsonParser, function(req, res){
 			return generateCSVFromTestCaseData(pageTestCaseData);
 		})
 		.then(function(pageTestCaseCSVData) {
-			console.log(pageTestCaseCSVData);
 			return createCSVFile(pageTestCaseCSVData, moduleName, "module");
 		})
 		.then(function(filePath){
-			res.send("created " + filePath);	
+			res.send(filePath);	
 		});
 	});
 });
@@ -378,7 +383,7 @@ app.post("/generateCSVFromTestCaseMapForPage", jsonParser, function(req, res){
 		return createCSVFile(pageTestCaseCSVData, pageName, "page");
 	})
 	.then(function(filePath){
-		res.send("created " + filePath);	
+		res.send(filePath);	
 	});
 });
 //Post body is an array for test case short name, 
@@ -395,12 +400,14 @@ app.post("/generateCSVFromTestCaseNameList", jsonParser, function(req, res){
 		return createCSVFile(tcCSVData, componentName, "component");
 	})
 	.then(function(filePath){
-		res.send("created " + filePath);	
+		res.send(filePath);	
 	});
 });
 app.get("/downloadFile/:filePath", function(req,res) {
-	const filePath = decodeURIComponent(req.params.filePath);	
-	res.download("./"+filePath);
+	const filePath = decodeURIComponent(req.params.filePath);
+	console.log("The File Path To Download");
+	console.log(filePath);	
+	res.download(filePath);
 });
 // app.get("/getTestCaseCountsForAllModules/:module_name", function(req,res){
 // });
